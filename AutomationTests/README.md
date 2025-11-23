@@ -13,25 +13,6 @@ This project represents a hybrid (API + UI) test framework written in C# and .NE
 | **Assertions** | FluentAssertions | For readable and clear assertions. |
 | **DI Container** | Reqnroll (BoDi) | Built-in Dependency Injection container. |
 
-## 📂 Project Structure
-The project follows a strict Page Object Model (POM) and layer separation:
-AutomationTests
-├── Api
-│   ├── Data            # API Models (Request/Response POCO classes)
-│   ├── Steps           # API Step Definitions
-│   └── TestData        # API Data Factory
-├── Ui
-│   ├── Data            # UI Models (PracticeFormData with Bogus)
-│   ├── Pages           # Page Objects (Locators & Actions)
-│   ├── Steps           # Step Definitions (Hooks & Steps)
-│   └── UiHooks.cs      # Browser Management (Setup/Teardown)
-├── Common
-│   ├── ConfigFactory.cs # Configuration loading (Dev/Test/Browser)
-│   └── ApiConstants.cs  # Constants and Paths
-├── Resources
-│   └── Features        # Gherkin (.feature) files
-└── appsettings.json    # Configuration (URL, Browser, etc.)
-
 ## ⚙️ Prerequisites
 To run the project, you must have the following installed:
 * .NET SDK 8.0 - Download here
