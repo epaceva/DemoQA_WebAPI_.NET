@@ -2,15 +2,16 @@
 This project represents a hybrid (API + UI) test framework written in C# and .NET 8.
 
 ## 🚀 Tech Stack
-Component	        Technology	      Description
-Language	        C# (.NET 8)	      Core development language.
-BDD Framework	    Reqnroll	      BDD tool (Cucumber for .NET), successor to SpecFlow.
-UI Automation	    Playwright	      The fastest and most reliable tool for browser automation.
-API Automation	    RestSharp	      Client for RESTful API requests.
-Test Runner	        NUnit	          Test execution engine.
-Data Generation	    Bogus	          Test data generator (equivalent to JavaFaker).
-Assertions	        FluentAssertions  For readable and clear assertions.
-DI Container	    Reqnroll (BoDi)	  Built-in Dependency Injection container.
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Language** | C# (.NET 8) | Core development language. |
+| **BDD Framework** | Reqnroll | BDD tool (Cucumber for .NET), successor to SpecFlow. |
+| **UI Automation** | Playwright | The fastest and most reliable tool for browser automation. |
+| **API Automation** | RestSharp | Client for RESTful API requests. |
+| **Test Runner** | NUnit | Test execution engine. |
+| **Data Generation** | Bogus | Test data generator (equivalent to JavaFaker). |
+| **Assertions** | FluentAssertions | For readable and clear assertions. |
+| **DI Container** | Reqnroll (BoDi) | Built-in Dependency Injection container. |
 
 ## 📂 Project Structure
 The project follows a strict Page Object Model (POM) and layer separation:
