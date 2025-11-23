@@ -1,0 +1,7 @@
+{
+  "addins": [
+    {
+      "assembly": "Allure.Reqnroll"
+    }
+  ]
+}
