@@ -94,20 +94,23 @@ namespace AutomationTests.Ui.Pages
             await _page.Locator(hobbyLocator).ClickAsync();
         }
 
-        public async Task SelectStateAndCity(string state, string city)
+       public async Task SelectStateAndCity(string state, string city)
         {
             await _page.Locator(StateDropdown).ClickAsync(new LocatorClickOptions { Force = true });
-
             await _page.Locator($"{StateDropdown} input").FillAsync(state);
+            
+            await _page.Locator("div[id^='react-select'][id*='-option-']").First.WaitForAsync();
+            
             await _page.Keyboard.PressAsync("Enter");
 
             await _page.Locator(CityDropdown).WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
-
-            await Task.Delay(500);
+            await Task.Delay(500); 
 
             await _page.Locator(CityDropdown).ClickAsync(new LocatorClickOptions { Force = true });
-
             await _page.Locator($"{CityDropdown} input").FillAsync(city);
+
+            await _page.Locator("div[id^='react-select'][id*='-option-']").First.WaitForAsync();
+
             await _page.Keyboard.PressAsync("Enter");
         }
 

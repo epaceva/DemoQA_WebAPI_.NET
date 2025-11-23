@@ -1,0 +1,6 @@
+**/bin
+**/obj
+**/allure-results
+**/TestResults
+.git
+.vscode

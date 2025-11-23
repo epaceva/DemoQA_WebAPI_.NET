@@ -1,0 +1,53 @@
+name: DemoQA Automation Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code from the repository
+    - uses: actions/checkout@v4
+
+    # Setup .NET 8 Environment
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Restore Dependencies (NuGet packages)
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ./AutomationTests
+
+    # Build the project
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: ./AutomationTests
+
+    # Install Playwright Browsers
+    # This script is generated after the build in the output folder
+    - name: Install Playwright Browsers
+      run: pwsh bin/Debug/net8.0/playwright.ps1 install
+      working-directory: ./AutomationTests
+
+    # Run Tests
+    # Runs all tests (API + UI)
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ./AutomationTests
+
+    # Upload Artifacts (Screenshots on Failure)
+    # If tests fail, this step uploads the screenshots so you can download them
+    - name: Upload Screenshots on Failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: error-screenshots
+        path: AutomationTests/bin/Debug/net8.0/*.png
+        retention-days: 5

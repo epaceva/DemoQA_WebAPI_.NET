@@ -24,24 +24,27 @@ namespace AutomationTests.Ui.Steps
         [BeforeScenario("UI")]
         public async Task SetupBrowser()
         {
-            // 1. Initialize Playwright
+            // Initialize Playwright
             _playwright = await Playwright.CreateAsync();
 
-            // 2. Get browser type from configuration (Environment variable or appsettings.json)
+            // Get browser type from configuration (Environment variable or appsettings.json)
             var browserType = ConfigFactory.Browser.ToLower();
 
-            // 3. Setup launch options (Headless mode, SlowMo, Arguments)
+            var isHeadless = Environment.GetEnvironmentVariable("HEADLESS") == "true";
+            Console.WriteLine($"🚀 ENV: {ConfigFactory.CurrentEnv} | BROWSER: {browserType} | HEADLESS: {isHeadless}");
+
+            // Setup launch options (Headless mode, SlowMo, Arguments)
             var options = new BrowserTypeLaunchOptions
             {
-                Headless = false, // Set to true for CI/CD execution
-                SlowMo = 100,     // Slow down execution slightly to see actions
+                Headless = isHeadless, // Set to true for CI/CD execution
+                SlowMo = isHeadless ? 0 : 100,     // Slow down execution slightly to see actions
                 Args = new[] { "--start-maximized" } // Arguments for Chromium-based browsers
             };
 
             // Log current setup to console
             Console.WriteLine($"🚀 RUNNING ON ENVIRONMENT: {ConfigFactory.CurrentEnv.ToUpper()} | BROWSER: {browserType.ToUpper()}");
 
-            // 4. Launch the appropriate browser based on configuration
+            // Launch the appropriate browser based on configuration
             switch (browserType)
             {
                 case "firefox":
@@ -53,19 +56,17 @@ namespace AutomationTests.Ui.Steps
                 case "chrome":
                 case "chromium":
                 default:
-                    // Chrome requires a specific channel to emulate the real browser
-                    options.Channel = "chrome"; 
                     _browser = await _playwright.Chromium.LaunchAsync(options);
                     break;
             }
 
-            // 5. Create a new Browser Context (isolated session)
+            // Create a new Browser Context (isolated session)
             _context = await _browser.NewContextAsync(new BrowserNewContextOptions
             {
                 ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
             });
 
-            // 6. Create a new Page (Tab)
+            // Create a new Page (Tab)
             _page = await _context.NewPageAsync();
             
             // Set default timeout to 30 seconds to handle network delays
@@ -100,7 +101,7 @@ namespace AutomationTests.Ui.Steps
                 document.head.appendChild(style);
             ");
 
-            // 7. Register the Page instance in the DI container for Step Definitions to use
+            // Register the Page instance in the DI container for Step Definitions to use
             _objectContainer.RegisterInstanceAs(_page);
         }
 
