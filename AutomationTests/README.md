@@ -86,3 +86,32 @@ Clean old results (Optional but recommended before run):
 ```bash
 rm -rf bin/Debug/net8.0/allure-results
 ```
+
+## 🐳 Docker Execution
+
+### 1. Build the Docker Image
+Run this command in the root directory (where the `Dockerfile` is located):
+```bash
+docker build -t demoqa-tests .  
+```
+
+### 2. Run Tests (Headless)
+This runs the tests inside the container and removes the container afterwards (--rm).
+
+```bash
+docker run --rm demoqa-tests
+```
+
+### 3. Run Tests & Extract Allure Report 
+
+#### Mac / Linux / PowerShell:
+
+```bash
+docker run --rm -v "$(pwd)/allure-results:/app/AutomationTests/bin/Debug/net8.0/allure-results" demoqa-tests
+```
+
+#### View the generated report locally:
+
+```bash
+allure serve allure-results
+```

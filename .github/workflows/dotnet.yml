@@ -41,6 +41,8 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: ./AutomationTests
+      env:
+        HEADLESS: "true"
 
     # Upload Artifacts (Screenshots on Failure)
     # If tests fail, this step uploads the screenshots so you can download them
